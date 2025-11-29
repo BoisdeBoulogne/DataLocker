@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class KeyManage {
 
-    public static final Path KEY_LIST = Paths.get(System.getProperty("user.dir"), "key.txt");
+    public static final Path KEY_LIST = Paths.get(System.getProperty("user.home"), "key.txt");
 
     // 生成密钥文件，并将密钥写入 KEY_LIST 文件进行管理
     public static void createKeyFile(String targetPath) {
