@@ -21,7 +21,7 @@ public class KeyManage {
     // 生成密钥文件，并将密钥写入 KEY_LIST 文件进行管理
     public static void createKeyFile(String targetPath) {
         try {
-            String key = SecretKeyUtil.keyToString(SecretKeyUtil.getSecretKey());
+            String key = SecretKeyUtil.keyToString(SecretKeyUtil.generateKey());
 
             // 写入目标 key 文件
             Files.writeString(Paths.get(targetPath), key, StandardOpenOption.CREATE);

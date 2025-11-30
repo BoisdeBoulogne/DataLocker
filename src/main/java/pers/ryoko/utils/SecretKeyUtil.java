@@ -9,25 +9,29 @@ import java.util.Base64;
  * 用于密钥相关的工具类(使用AES算法)
  */
 public class SecretKeyUtil {
-    public static final String ALGORITHM = "AES";
-    // 生成密钥
-    public static SecretKey getSecretKey() throws Exception {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
-        keyGenerator.init(128);
+
+    // 加密算法（用于 Cipher）
+    public static final String ALGORITHM = "AES/CBC/PKCS5Padding";
+
+    // AES 密钥长度
+    private static final int AES_KEY_SIZE = 128;
+
+    // 生成 AES 密钥
+    public static SecretKey generateKey() throws Exception {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(AES_KEY_SIZE);
         return keyGenerator.generateKey();
     }
 
-    //将密钥转换为字符串形式，用于存储
+    // 密钥转 Base64 字符串
     public static String keyToString(SecretKey key) {
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
-    //从字符串恢复密钥
-
+    // Base64 字符串转回 AES 密钥
     public static SecretKey stringToKey(String keyString) {
-        byte[] decodedKey = Base64.getDecoder().decode(keyString);
-        return new SecretKeySpec(decodedKey, 0, decodedKey.length, ALGORITHM);
+        byte[] keyBytes = Base64.getDecoder().decode(keyString);
+        return new SecretKeySpec(keyBytes, "AES"); // ★必须是 AES
     }
-
-
 }
+
