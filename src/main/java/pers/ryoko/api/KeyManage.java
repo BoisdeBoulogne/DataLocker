@@ -49,11 +49,16 @@ public class KeyManage {
         );
     }
     // 获取各KEY文件地址
-    public static synchronized Set<String> getKeyList() throws IOException {
-        return Files.readAllLines(KEY_LIST).stream()
-                .map(line -> line.replaceFirst("^path:", ""))
-                .collect(Collectors.toSet());
+    public static synchronized Set<String> getKeyList()   {
+        try {
+            return Files.readAllLines(KEY_LIST).stream()
+                    .map(line -> line.replaceFirst("^path:", ""))
+                    .collect(Collectors.toSet());
+        } catch (IOException e){
+            throw new RuntimeException("获取密钥列表失败", e);
+        }
     }
+
 
 }
 

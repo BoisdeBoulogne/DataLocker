@@ -11,14 +11,15 @@ import javafx.stage.Stage;
 public class DateLockerApplication extends Application{
     @Override
     public void start(Stage stage) {
-        VBox root = new VBox(10);
+        MainUI ui = new MainUI();
+        Scene scene = new Scene(ui.getRoot(), 600, 400);
 
-        Scene scene = new Scene(root, 600, 400);
+        stage.setTitle("DateLocker");
         stage.setScene(scene);
-        stage.setTitle("文件加密工具");
         stage.show();
     }
+
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
