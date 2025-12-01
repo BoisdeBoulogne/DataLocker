@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author 网云2304 542307280411 李润东
- * 密钥相关
+ * 密钥管理相关
  */
 public class KeyManage {
 

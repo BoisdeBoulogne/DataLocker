@@ -31,7 +31,7 @@ public class SecretKeyUtil {
     // Base64 字符串转回 AES 密钥
     public static SecretKey stringToKey(String keyString) {
         byte[] keyBytes = Base64.getDecoder().decode(keyString);
-        return new SecretKeySpec(keyBytes, "AES"); // ★必须是 AES
+        return new SecretKeySpec(keyBytes, "AES");
     }
 }
 

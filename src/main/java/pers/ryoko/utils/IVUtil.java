@@ -8,7 +8,7 @@ import java.security.SecureRandom;
 /**
  * @author 网云2304 542307280411 李润东
  * 与IV(初始化向量)相关的工具类
- * 打算是，加密时，生成IV，写入文件中，解密时，从文件中读取IV，用于解密
+ * 流程：加密时，生成IV，写入文件中，解密时，从文件中读取IV，用于解密
  */
 public class IVUtil {
 
@@ -25,14 +25,18 @@ public class IVUtil {
      * 要求文件内容至少 16 字节
      */
     public static IvParameterSpec readIvFromStream(InputStream is) throws IOException {
-        byte[] iv = new byte[16];
-        int read = is.read(iv);
+        try {
+            byte[] iv = new byte[16];
+            int read = is.read(iv);
 
-        if (read != 16) {
-            throw new IOException("加密向量缺失");
+            if (read != 16) {
+                throw new IOException("加密向量缺失");
+            }
+
+            return new IvParameterSpec(iv);
+        } catch (IOException e) {
+            throw new RuntimeException("读取 IV 失败", e);
         }
-
-        return new IvParameterSpec(iv);
     }
 
 }

@@ -1,5 +1,7 @@
 package pers.ryoko.api;
 
+import lombok.extern.slf4j.Slf4j;
+import pers.ryoko.utils.IVUtil;
 import pers.ryoko.utils.SecretKeyUtil;
 
 import javax.crypto.Cipher;
@@ -11,7 +13,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
+/**
+ * @author 网云2304 542307280411 李润东
+ * 解密文件API
+ */
+@Slf4j
 public class DecryptFile {
 
     public static void decryptFile(String encryptedPath, String targetPath, String keyPath) {
@@ -20,19 +26,20 @@ public class DecryptFile {
 
             SecretKey key = loadKey(keyPath);
 
-            IvParameterSpec iv = readIv(is);
+            IvParameterSpec iv = IVUtil.readIvFromStream(is);
 
             Cipher cipher = initCipher(key, iv);
 
             decryptStream(is, os, cipher);
-
+            log.info("{}解密完成，文件已保存为: {}所使用的密钥文件:{}", encryptedPath, targetPath, keyPath);
         } catch (Exception e) {
+            log.error("解密文件失败: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
 
-    // 1. 读取密钥
+    // 读取密钥
     private static SecretKey loadKey(String keyPath) {
         try {
             String keyString = Files.readString(Paths.get(keyPath));
@@ -43,22 +50,8 @@ public class DecryptFile {
     }
 
 
-    // 2. 从文件前 16 字节读取 IV
-    private static IvParameterSpec readIv(InputStream is) {
-        try {
-            byte[] ivBytes = new byte[16];
-            int read = is.read(ivBytes);
-            if (read != 16) {
-                throw new RuntimeException("文件格式错误：IV 长度不足 16 字节");
-            }
-            return new IvParameterSpec(ivBytes);
-        } catch (Exception e) {
-            throw new RuntimeException("读取 IV 失败", e);
-        }
-    }
 
-
-    // 3. 初始化 Cipher（解密模式）
+    // 初始化 Cipher（解密模式）
     private static Cipher initCipher(SecretKey key, IvParameterSpec iv) {
         try {
             Cipher cipher = Cipher.getInstance(SecretKeyUtil.ALGORITHM);
@@ -70,7 +63,7 @@ public class DecryptFile {
     }
 
 
-    // 4. 解密剩余字节流
+    // 解密剩余字节流
     private static void decryptStream(InputStream is, OutputStream os, Cipher cipher) {
         try {
             byte[] buffer = new byte[4096];
