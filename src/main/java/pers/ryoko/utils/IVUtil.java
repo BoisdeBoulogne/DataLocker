@@ -24,7 +24,7 @@ public class IVUtil {
      * 从文件读取 IV
      * 要求文件内容至少 16 字节
      */
-    public static IvParameterSpec readIvFromStream(InputStream is) throws IOException {
+    public static IvParameterSpec readIvFromStream(InputStream is) {
         try {
             byte[] iv = new byte[16];
             int read = is.read(iv);
