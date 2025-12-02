@@ -20,7 +20,8 @@ import java.nio.file.Paths;
 @Slf4j
 public class DecryptFile {
 
-    public static void decryptFile(String encryptedPath, String targetPath, String keyPath) {
+    public static void decryptFile(String encryptedPath, String targetDir, String keyPath) {
+        String targetPath = targetDir + "/" + autoGuessDecryptedName(encryptedPath);
         try (InputStream is = new FileInputStream(encryptedPath);
              OutputStream os = new FileOutputStream(targetPath)) {
 
@@ -84,5 +85,15 @@ public class DecryptFile {
         } catch (Exception e) {
             throw new RuntimeException("解密流处理失败: " + e.getMessage(), e);
         }
+    }
+
+    private static String autoGuessDecryptedName(String encryptedPath) {
+        // 假设加密文件名形如 xxx.xxx.enc
+        String encryptedName = Paths.get(encryptedPath).getFileName().toString();
+        if (encryptedName.endsWith(".enc")) {
+            return encryptedName.substring(0, encryptedName.length() - 4);
+        }
+        // 否则默认追加 "_dec"
+        return encryptedName + "_dec";
     }
 }

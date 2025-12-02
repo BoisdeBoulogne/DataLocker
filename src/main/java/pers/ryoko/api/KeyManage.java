@@ -1,5 +1,6 @@
 package pers.ryoko.api;
 
+import lombok.extern.slf4j.Slf4j;
 import pers.ryoko.utils.SecretKeyUtil;
 
 import java.io.*;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
  * @author 网云2304 542307280411 李润东
  * 密钥管理相关
  */
+@Slf4j
 public class KeyManage {
-
     public static final Path KEY_LIST = Paths.get(System.getProperty("user.home"), "key.txt");
 
     // 生成密钥文件，并将密钥写入 KEY_LIST 文件进行管理
@@ -28,7 +29,7 @@ public class KeyManage {
 
             // 写入 keyList
             writeKeyList(targetPath);
-
+            log .info("密钥文件已生成: {}", targetPath);
         } catch (Exception e) {
             throw new RuntimeException("生成密钥文件失败", e);
         }
