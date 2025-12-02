@@ -15,14 +15,13 @@ import java.util.Set;
 
 public class MainUI {
 
-    private VBox root;
+    private final  VBox root;
 
     public MainUI() {
 
 
         root = new VBox(15);
         root.setPadding(new Insets(20));
-
         Label title = new Label("DateLocker 文件加密工具");
         title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
@@ -163,7 +162,7 @@ public class MainUI {
             StringBuilder sb = new StringBuilder();
             keys.forEach(k -> sb.append(k).append("\n"));
 
-            showInfo("密钥列表", sb.length() == 0 ? "暂无密钥" : sb.toString());
+            showInfo("密钥列表", sb.isEmpty() ? "暂无密钥" : sb.toString());
         } catch (Exception ex) {
             showError("读取密钥失败", ex.getMessage());
         }
@@ -198,13 +197,6 @@ public class MainUI {
         alert.showAndWait();
     }
 
-    private String autoGuessDecryptedName(String encryptedPath) {
-        // 假设加密文件名形如 xxx.xxx.enc
-        if (encryptedPath.endsWith(".enc")) {
-            return encryptedPath.substring(0, encryptedPath.length() - 4);
-        }
-        // 否则默认追加 "_dec"
-        return encryptedPath + "_dec";
-    }
+
 
 }
