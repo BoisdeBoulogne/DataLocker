@@ -11,7 +11,6 @@ import pers.ryoko.api.KeyManage;
 
 import java.io.File;
 import java.util.List;
-import java.util.Set;
 
 public class MainUI {
 
@@ -29,8 +28,7 @@ public class MainUI {
                 new Button("查看使用说明"),
                 new Button("选择文件并加密"),
                 new Button("选择文件并解密"),
-                new Button("生成密钥文件"),
-                new Button("查看密钥列表")
+                new Button("生成密钥文件")
         );
 
         int btnCount = buttons.size();
@@ -47,7 +45,6 @@ public class MainUI {
         buttons.get(1).setOnAction(e -> handleEncrypt());
         buttons.get(2).setOnAction(e -> handleDecrypt());
         buttons.get(3).setOnAction(e -> handleCreateKey());
-        buttons.get(4).setOnAction(e -> handleShowKeys());
 
         root.getChildren().add(title);
         root.getChildren().addAll(buttons);
@@ -153,20 +150,7 @@ public class MainUI {
         }
     }
 
-    // ===================================
-    // 查看密钥列表
-    // ===================================
-    private void handleShowKeys() {
-        try {
-            Set<String> keys = KeyManage.getKeyList();
-            StringBuilder sb = new StringBuilder();
-            keys.forEach(k -> sb.append(k).append("\n"));
 
-            showInfo("密钥列表", sb.isEmpty() ? "暂无密钥" : sb.toString());
-        } catch (Exception ex) {
-            showError("读取密钥失败", ex.getMessage());
-        }
-    }
 
     // ===================================
     // 公共弹窗

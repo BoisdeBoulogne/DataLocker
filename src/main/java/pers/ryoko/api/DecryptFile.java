@@ -17,7 +17,6 @@ import java.nio.file.Paths;
  * @author 网云2304 542307280411 李润东
  * 解密文件API
  */
-@Slf4j
 public class DecryptFile {
 
     public static void decryptFile(String encryptedPath, String targetDir, String keyPath) {
@@ -32,9 +31,7 @@ public class DecryptFile {
             Cipher cipher = initCipher(key, iv);
 
             decryptStream(is, os, cipher);
-            log.info("{}解密完成，文件已保存为: {}所使用的密钥文件:{}", encryptedPath, targetPath, keyPath);
         } catch (Exception e) {
-            log.error("解密文件失败: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }

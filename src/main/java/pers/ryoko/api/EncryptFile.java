@@ -16,7 +16,6 @@ import java.nio.file.Paths;
  * @author 网云2304 542307280411 李润东
  * 加密文件API
  */
-@Slf4j
 public class EncryptFile {
 
     // 主方法
@@ -32,9 +31,7 @@ public class EncryptFile {
             Cipher cipher = initCipher(key, iv);
 
             encryptStream(is, os, cipher);
-            log.info("{}加密完成，文件已保存为: {}所使用的密钥文件:{}", filePath, targetPath, keyPath);
         } catch (Exception e) {
-            log.error("加密文件失败: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
