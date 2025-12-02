@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class DateLockerApplication extends Application{
+public class DataLockerApplication extends Application{
     @Override
     public void start(Stage stage) {
         MainUI ui = new MainUI();

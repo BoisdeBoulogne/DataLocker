@@ -32,34 +32,58 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>21.0.2</version>
-            <classifier>win</classifier>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>21.0.2</version>
-            <classifier>win</classifier>
         </dependency>
 
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>21.0.2</version>
-            <classifier>win</classifier>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.40</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
+
                 <configuration>
-                    <mainClass>pers.ryoko.gui.DateLockerApplication</mainClass>
+                    <mainClass>pers.ryoko.gui.DataLockerApplication</mainClass>
+
+                    <jlinkZipName>data-locker-runtime</jlinkZipName>
+                    <jlinkImageName>data-locker-app</jlinkImageName>
+                    <stripDebug>true</stripDebug>
+                    <compress>2</compress>
                 </configuration>
+
+                <executions>
+                    <execution>
+                        <id>default-jlink</id>
+                        <goals>
+                            <goal>jlink</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
         </plugins>
     </build>
 
