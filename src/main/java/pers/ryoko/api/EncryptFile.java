@@ -1,5 +1,4 @@
 package pers.ryoko.api;
-import lombok.extern.slf4j.Slf4j;
 import pers.ryoko.utils.IVUtil;
 import pers.ryoko.utils.SecretKeyUtil;
 

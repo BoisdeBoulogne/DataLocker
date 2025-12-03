@@ -15,18 +15,7 @@
     </properties>
 
     <dependencies>
-    <!--  简化代码用  -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.40</version>
-        </dependency>
-    <!--  日志框架  -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.5.20</version>
-        </dependency>
+
     <!-- 使用JavaFX开发GUI    -->
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -48,13 +37,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>1.18.40</version>
-                        </path>
-                    </annotationProcessorPaths>
                     <source>17</source>
                     <target>17</target>
                 </configuration>
