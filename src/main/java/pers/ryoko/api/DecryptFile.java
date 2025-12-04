@@ -2,7 +2,7 @@ package pers.ryoko.api;
 
 import pers.ryoko.utils.IVUtil;
 import pers.ryoko.utils.SecretKeyUtil;
-
+import pers.ryoko.utils.LoggingUtil;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -30,7 +30,12 @@ public class DecryptFile {
             Cipher cipher = initCipher(key, iv);
 
             decryptStream(is, os, cipher);
+            String msg = String.format("解密成功，使用密钥:%s  保存目录为:%s", targetPath, keyPath);
+            LoggingUtil.info("解密成功，保存目录为:" + targetPath);
         } catch (Exception e) {
+            String errMsg = String.format("解密失败，使用密钥:%s  目标文件:%s  错误信息:%s",
+                    keyPath, encryptedPath, e.getMessage());
+            LoggingUtil.error(errMsg, e);
             throw new RuntimeException(e);
         }
     }
@@ -42,6 +47,8 @@ public class DecryptFile {
             String keyString = Files.readString(Paths.get(keyPath));
             return SecretKeyUtil.stringToKey(keyString);
         } catch (Exception e) {
+            String errMsg = String.format("密钥加载失败，密钥文件:%s" , keyPath);
+            LoggingUtil.error(errMsg, e);
             throw new RuntimeException("密钥加载失败: " + e.getMessage(), e);
         }
     }
@@ -55,6 +62,7 @@ public class DecryptFile {
             cipher.init(Cipher.DECRYPT_MODE, key, iv);
             return cipher;
         } catch (Exception e) {
+            LoggingUtil.error("解密 Cipher 初始化失败: ",e);
             throw new RuntimeException("解密 Cipher 初始化失败", e);
         }
     }
@@ -79,6 +87,7 @@ public class DecryptFile {
             }
 
         } catch (Exception e) {
+            LoggingUtil.error("解密流处理失败: ",e);
             throw new RuntimeException("解密流处理失败: " + e.getMessage(), e);
         }
     }

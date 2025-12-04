@@ -1,5 +1,6 @@
 package pers.ryoko.api;
 
+import pers.ryoko.utils.LoggingUtil;
 import pers.ryoko.utils.SecretKeyUtil;
 
 import java.nio.file.Files;
@@ -18,8 +19,9 @@ public class KeyManage {
 
             // 写入目标 key 文件
             Files.writeString(Paths.get(targetPath), key, StandardOpenOption.CREATE);
-
+            LoggingUtil.info("密钥文件已生成，保存目录为:" + targetPath);
         } catch (Exception e) {
+            LoggingUtil.error("生成密钥文件失败: ",e);
             throw new RuntimeException("生成密钥文件失败", e);
         }
     }

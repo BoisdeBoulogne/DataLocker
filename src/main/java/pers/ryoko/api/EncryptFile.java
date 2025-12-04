@@ -1,5 +1,6 @@
 package pers.ryoko.api;
 import pers.ryoko.utils.IVUtil;
+import pers.ryoko.utils.LoggingUtil;
 import pers.ryoko.utils.SecretKeyUtil;
 
 import javax.crypto.Cipher;
@@ -30,6 +31,8 @@ public class EncryptFile {
             Cipher cipher = initCipher(key, iv);
 
             encryptStream(is, os, cipher);
+            String msg = String.format("加密成功，保存地址为: %s , 使用的密钥为: %s", targetPath, keyPath);
+            LoggingUtil.info(msg);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -42,6 +45,7 @@ public class EncryptFile {
             String keyString = Files.readString(Paths.get(keyPath));
             return SecretKeyUtil.stringToKey(keyString);
         } catch (Exception e) {
+            LoggingUtil.error("密钥加载失败: ",e);
             throw new RuntimeException("密钥加载失败: " + e.getMessage(), e);
         }
     }
@@ -54,6 +58,7 @@ public class EncryptFile {
             os.write(iv.getIV());
             return iv;
         } catch (Exception e) {
+            LoggingUtil.error("写入 IV 失败: ",e);
             throw new RuntimeException("写入 IV 失败", e);
         }
     }
@@ -66,6 +71,7 @@ public class EncryptFile {
             cipher.init(Cipher.ENCRYPT_MODE, key, iv);
             return cipher;
         } catch (Exception e) {
+            LoggingUtil.error("加密 Cipher 初始化失败: ",e);
             throw new RuntimeException("加密 Cipher 初始化失败", e);
         }
     }
@@ -90,6 +96,7 @@ public class EncryptFile {
             }
 
         } catch (Exception e) {
+            LoggingUtil.error("加密流处理失败: ",e);
             throw new RuntimeException("加密流处理失败: " + e.getMessage(), e);
         }
     }

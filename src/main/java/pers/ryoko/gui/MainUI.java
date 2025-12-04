@@ -60,7 +60,7 @@ public class MainUI {
 
 
     private void handleShowNote() {
-        showInfo("使用须知","支持密钥生成，以及文件的AES加密、解密，使用时请务必保管好密钥\n本应用会在用户目录下创建key.txt、DataLocker.log分别用于保存密钥位置以及日志记录");
+        showInfo("使用须知","支持密钥生成，以及文件的AES加密、解密，使用时请务必保管好密钥\n本应用会在Appdata目录下创建DataLocker.log用于保存日志记录");
     }
 
     // ===================================
